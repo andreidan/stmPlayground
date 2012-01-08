@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="src" path="src/test"/>
 	<classpathentry kind="src" path="src/java"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/akka-stm-1.2.jar"/>
-	<classpathentry kind="lib" path="lib/scala-library.jar"/>
-	<classpathentry kind="lib" path="lib/multiverse-alpha-0.6.2.jar"/>
-	<classpathentry kind="lib" path="lib/akka-actor-1.2.jar"/>
-	<classpathentry kind="output" path="classes"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/andrei/.gradle/caches/artifacts-4/se.scalablesolutions.akka/akka-actor/6197a2bd98b40c4b2ffa1d43c143bb25/jars/akka-actor-1.2.jar" sourcepath="C:/Users/andrei/.gradle/caches/artifacts-4/se.scalablesolutions.akka/akka-actor/6197a2bd98b40c4b2ffa1d43c143bb25/sources/akka-actor-1.2-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/andrei/.gradle/caches/artifacts-4/se.scalablesolutions.akka/akka-stm/6197a2bd98b40c4b2ffa1d43c143bb25/jars/akka-stm-1.2.jar" sourcepath="C:/Users/andrei/.gradle/caches/artifacts-4/se.scalablesolutions.akka/akka-stm/6197a2bd98b40c4b2ffa1d43c143bb25/sources/akka-stm-1.2-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/andrei/.gradle/caches/artifacts-4/org.multiverse/multiverse-alpha/c12498cf18507aa6433a94eb7d3e77d5/jars/multiverse-alpha-0.6.2.jar" sourcepath="C:/Users/andrei/.gradle/caches/artifacts-4/org.multiverse/multiverse-alpha/c12498cf18507aa6433a94eb7d3e77d5/sources/multiverse-alpha-0.6.2-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/andrei/.gradle/caches/artifacts-4/junit/junit/c12498cf18507aa6433a94eb7d3e77d5/jars/junit-4.8.2.jar" sourcepath="C:/Users/andrei/.gradle/caches/artifacts-4/junit/junit/c12498cf18507aa6433a94eb7d3e77d5/sources/junit-4.8.2-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/andrei/.gradle/caches/artifacts-4/org.scala-lang/scala-library/c12498cf18507aa6433a94eb7d3e77d5/jars/scala-library-2.9.1.jar" sourcepath="C:/Users/andrei/.gradle/caches/artifacts-4/org.scala-lang/scala-library/c12498cf18507aa6433a94eb7d3e77d5/sources/scala-library-2.9.1-sources.jar"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>
