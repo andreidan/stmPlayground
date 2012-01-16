@@ -1,6 +1,7 @@
 package com.stm.playground.store;
 
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import scala.Option;
 import akka.stm.Atomic;
@@ -8,6 +9,7 @@ import akka.stm.StmUtils;
 import akka.stm.TransactionFactory;
 import akka.stm.TransactionFactoryBuilder;
 import akka.stm.TransactionalMap;
+import akka.util.FiniteDuration;
 
 import com.stm.playground.ProductNotAvailableException;
 import com.stm.playground.model.Product;
@@ -24,7 +26,7 @@ public class OnlineStore {
 
 	// drop the speculative option which might give you a better performance, but it behaves inconsistent ( IMHO ) - regarding the number of retries
 	// or even if it WILL retry or not.
-	private final TransactionFactory txFactory = new TransactionFactoryBuilder().setSpeculative(false).setMaxRetries(5).setReadonly(false).build();
+	private final TransactionFactory txFactory = new TransactionFactoryBuilder().setSpeculative(false).setMaxRetries(5).setReadonly(false).setTimeout(new FiniteDuration(60, TimeUnit.SECONDS)).setBlockingAllowed(true).setTrackReads(true).build();
 
 	public OnlineStore() {
 		super();
@@ -130,4 +132,55 @@ public class OnlineStore {
 
 		}.execute();
 	}
+
+	/**
+	 * Will return true if we'll find the product in store, and the stock count will be higher than 0. 
+	 * 
+	 * First retry of the transaction will occur if the product is not in our store, and after this is fulfilled we will retry if we found the product 
+	 * in store, but there is none currently available ( current stock count is 0 ).
+	 * 
+	 * See txFactory configuration - the timout is configured there.
+	 * 
+	 * @param productId
+	 * @return true if the product is available for buy.
+	 */
+	public boolean waitUntilProductIsAvailable(final UUID productId) {
+
+		return new Atomic<Boolean>(txFactory) {
+			@Override
+			public Boolean atomically() {
+
+				Option<Product> option = productsMap.get(productId);
+
+				StmUtils.deferred(new Runnable() {
+
+					public void run() {
+						System.out.println(Thread.currentThread().getName() + " - SUCCESS, the product with id: "+ productId+" is in stock. ");
+					}
+				});
+
+				StmUtils.compensating(new Runnable() {
+
+					public void run() {
+						System.out.println(Thread.currentThread().getName() + " - FAIL, the product with id: " +productId+ " is not in the store. ");
+					}
+				});
+
+				if (!option.isDefined()) {
+					System.out.println(" RETRYING since we don't have the option in our store right now ! ");
+					StmUtils.retry();
+				}
+
+				final Product product = option.get();
+
+				if (product.getAvailableInStockCount() == 0) {
+					System.out.println(" RETRYING since the stock count for product : " + product.name + " is 0.");
+					StmUtils.retry();
+				}
+
+				return true;
+			}
+		}.execute();
+	}
+
 }
