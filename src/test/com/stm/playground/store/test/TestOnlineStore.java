@@ -24,7 +24,7 @@ import com.stm.playground.store.OnlineStore;
  */
 public class TestOnlineStore {
 
-	private ExecutorService executorService = Executors.newFixedThreadPool(5);
+	private ExecutorService executorService = Executors.newFixedThreadPool(9);
 
 	@Rule
 	public TestName runningTestName = new TestName();
@@ -95,9 +95,9 @@ public class TestOnlineStore {
 		}
 
 		// wait until there is at least one product in the store
-		while (countDownLatch.getCount() == 7) {
+		while (countDownLatch.getCount() == 9) {
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(300);
 			} catch (InterruptedException e) {
 				// yeah
 			}
