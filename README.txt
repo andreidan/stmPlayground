@@ -1,3 +1,5 @@
+<a rel="me" href="https://hachyderm.io/@kanelbullar">Mastodon</a>
+
 stmPlayground - simple HelloWorld-type tryouts using AKKA and java. Namely trying to run concurrent operations wrapped up in transactions ( STM ).
 
 I tried to simulate somehow what often happens on Amazon ( for example ), when they show they have 3 items of some type on stock and 6 users concurrently attempt to 
